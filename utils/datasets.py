@@ -123,6 +123,8 @@ class ListDataset(Dataset):
 
             targets = torch.zeros((len(boxes), 6))
             targets[:, 1:] = boxes
+        else:
+            raise Exception("Path DNE: " + label_path)
 
         # Apply augmentations
         if self.augment:

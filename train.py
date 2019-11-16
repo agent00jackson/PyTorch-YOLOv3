@@ -51,6 +51,7 @@ if __name__ == "__main__":
     train_path = data_config["train"]
     valid_path = data_config["valid"]
     class_names = load_classes(data_config["names"])
+    print(class_names)
 
     # Initiate model
     model = Darknet(opt.model_def).to(device)
@@ -169,10 +170,17 @@ if __name__ == "__main__":
 
             # Print class APs and mAP
             ap_table = [["Index", "Class name", "AP"]]
-            for i, c in enumerate(ap_class):
-                ap_table += [[c, class_names[c], "%.5f" % AP[i]]]
-            print(AsciiTable(ap_table).table)
+            print(AP)
+            #for i, c in enumerate(ap_class):
+            #
+            #    proc = True
+            #    while proc:
+            #        try:
+            #            ap_table += [[c, class_names[c], "%.5f" % AP[i]]]
+            #            proc = False
+            #        except:
+            #            print(str(i) + ":" + str(c))
+            #print(AsciiTable(ap_table).table)
             print(f"---- mAP {AP.mean()}")
 
-        if epoch % opt.checkpoint_interval == 0:
-            torch.save(model.state_dict(), f"checkpoints/yolov3_ckpt_%d.pth" % epoch)
+        torch.save(model.state_dict(), f"checkpoints/yolov3_ckpt_%d.pth" % epoch)
